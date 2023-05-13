@@ -8,25 +8,16 @@ class AN_Sidebar {
 
     // Thuộc tính
     private $sidebar_model = array();                 // model của sidebar    
-    private $sidebar_view;                              // view của sidebar    
     private $sidebar_content = array();                 // view content của sidebar    
     private $sidebar_data = array();                    // data ngắn hạn
+    private $sidebar_view;                              // view của sidebar    
 
     // Khởi tạo
     public function __construct() {
 
-        // Loading code model và view
-        require_once get_template_directory() . '/classes/models/an-sidebar-model.php';
-        require_once get_template_directory() . '/classes/views/an-sidebar-view.php';
-
         // Thao tác khi khởi tạo sidebar - Lấy thông tin của Model
-        if (class_exists('AN_Sidebar_Model')) {
-            $this->sidebar_model    = new AN_Sidebar_Model();
-        }
-
-        if (class_exists('AN_Sidebar_View')) {
-            $this->sidebar_view     = new AN_Sidebar_View();
-        }
+        $this->sidebar_model    = new AN_Sidebar_Model();
+        $this->sidebar_view     = new AN_Sidebar_View();
     }
 
     // Tạo mới một sidebar

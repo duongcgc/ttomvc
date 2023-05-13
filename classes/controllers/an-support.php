@@ -16,9 +16,6 @@ class AN_Support {
     // Phương thức
     public function __construct() {
 
-        // Loading code từ theme dir /classes/models/an-support-model.php
-        require_once get_template_directory() . '/classes/models/an-support-model.php';
-
         // Thao tác khi bắt đầu
         $this->support_data = new AN_Support_Model();
     }

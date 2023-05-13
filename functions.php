@@ -10,11 +10,26 @@
  * @since Twenty Twenty-One MVC 1.0
  */
 
+// Định nghĩa hằng số cơ bản Theme WordPress
+define('THEME_NAME',                'TTOMVC');
+
+// Định nghĩa hằng số liên quan đến version
+define('THEME_VERSION',             '1.0.0');
+
+// Định nghĩa hằng số liên quan đến đường dẫn
+define('THEME_URL',                 get_template_directory_uri());
+define('THEME_DIR',                 get_template_directory());
+define('THEME_ASSET',               THEME_URL . '/assets');
+define('THEME_CSS',                 THEME_ASSET . '/css');
+define('THEME_JS',                  THEME_ASSET . '/js');
+define('THEME_IMG',                 THEME_ASSET . '/images');
+define('THEME_CORE',                THEME_DIR . '/core');
+
+// Autoload classes
+require_once('classes/autoloader.php');
+
 // This theme requires WordPress 5.3 or later.
 if (version_compare($GLOBALS['wp_version'], '5.3', '<')) {
-
-    // Nạp code tương thích phiên bản cũ
-    require get_template_directory() . '/classes/controllers/an-back-compat.php';
 
     // Tạo đối tượng xử lý tương thích phiên bản cũ, nếu tồn tại class AN_Back_Compat    
     if (class_exists("AN_Back_Compat")) {
@@ -25,7 +40,7 @@ if (version_compare($GLOBALS['wp_version'], '5.3', '<')) {
 // Load code start theme ===============>
 // Kiểm tra nếu tồn tại class AN_Start thì tạo một đối tượng Init
 
-require get_template_directory() . '/classes/class-an-start.php';
+require THEME_DIR . '/classes/class-an-start.php';
 if (class_exists("AN_Start")) {
 
     // Chạy các hàm khởi động

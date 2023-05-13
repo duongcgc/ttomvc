@@ -33,22 +33,17 @@ class AN_Setup {
          * Loading code từ trong thư mục theme /classes/controllers/an-support.php
          **/
 
-        require_once get_template_directory() . '/classes/controllers/an-support.php';
-
         // Kiểm tra nếu tồn tại class AN_Support thì tạo mới đối tượng từ nó
-        if (class_exists('AN_Support')) {
-            $this->theme_support = new AN_Support();
+        $this->theme_support = new AN_Support();
 
-            // Móc phương thức triển khai add_theme_support của class vào action after_setup_theme
-            add_action("after_setup_theme", array($this, 'add_theme_support'));
-        }
+        // Móc phương thức triển khai add_theme_support của class vào action after_setup_theme
+        add_action("after_setup_theme", array($this, 'add_theme_support'));
     }
 
     // Tạo phương thức add_theme_support cho class
     public function add_theme_support() {
 
-
-        do_action('an_begin_of_setup');
+        do_action('an_before_setup');
 
         /*
 		 * Make theme available for translation.
@@ -137,12 +132,11 @@ class AN_Setup {
         // Register Menu register_nav_menus ===============>
 
 
-
         // Support Starter Content ===========>
 
 
         // Support editor-styles ===========>
 
-        do_action('an_end_of_setup');
+        do_action('an_after_setup');
     }
 }
