@@ -23,10 +23,14 @@ define('THEME_ASSET',               THEME_URL . '/assets');
 define('THEME_CSS',                 THEME_ASSET . '/css');
 define('THEME_JS',                  THEME_ASSET . '/js');
 define('THEME_IMG',                 THEME_ASSET . '/images');
-define('THEME_CORE',                THEME_DIR . '/core');
+define('THEME_CLASS',               THEME_DIR . '/classes');
+define('THEME_CONFIG',              THEME_CLASS . '/config');
+define('THEME_MODEL',               THEME_CLASS . '/models');
+define('THEME_VIEW',                THEME_CLASS . '/views');
+define('THEME_CONTROLLER',          THEME_CLASS . '/controllers');
 
 // Autoload classes
-require_once('classes/autoloader.php');
+require_once(THEME_CLASS . '/autoloader.php');
 
 // This theme requires WordPress 5.3 or later.
 if (version_compare($GLOBALS['wp_version'], '5.3', '<')) {
@@ -40,7 +44,7 @@ if (version_compare($GLOBALS['wp_version'], '5.3', '<')) {
 // Load code start theme ===============>
 // Kiểm tra nếu tồn tại class AN_Start thì tạo một đối tượng Init
 
-require THEME_DIR . '/classes/class-an-start.php';
+require THEME_CLASS . '/class-an-start.php';
 if (class_exists("AN_Start")) {
 
     // Chạy các hàm khởi động

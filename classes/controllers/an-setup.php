@@ -20,6 +20,7 @@ class AN_Setup {
 
     // Thuộc tính
     private $theme_support;
+    private $theme_assets;
     private $global_config;
 
     // Phương thức
@@ -32,9 +33,10 @@ class AN_Setup {
          * Tạo đối tượng bổ sung các tính năng lõi của Theme 
          * Loading code từ trong thư mục theme /classes/controllers/an-support.php
          **/
-
-        // Kiểm tra nếu tồn tại class AN_Support thì tạo mới đối tượng từ nó
         $this->theme_support = new AN_Support();
+
+        // Bổ sung assets cho theme backend và frontend
+        $this->theme_assets = new AN_Assets();
 
         // Móc phương thức triển khai add_theme_support của class vào action after_setup_theme
         add_action("after_setup_theme", array($this, 'add_theme_support'));
@@ -129,13 +131,17 @@ class AN_Setup {
             ->add_support('title-tag');
 
 
-        // Register Menu register_nav_menus ===============>
-
-
         // Support Starter Content ===========>
 
 
         // Support editor-styles ===========>
+        $background_color = get_theme_mod('background_color', 'D1E4DD');
+        if (127 > AN_Custom_Colors::get_relative_luminance_from_hex($background_color)) {
+            $this->theme_support->add_support('dark-editor-style');
+        }
+
+        // Remove feed icon link from legacy RSS widget.
+        add_filter('rss_widget_feed_link', '__return_empty_string');
 
         do_action('an_after_setup');
     }

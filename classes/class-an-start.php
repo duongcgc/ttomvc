@@ -34,24 +34,59 @@ class AN_Start {
          *
          * @return void
          */
-        $main_sidebar = new AN_Sidebar();
-        $footer_sidebar = new AN_Sidebar();
 
         // Tạo UI quản lý Sidebar => Giao diện > Widgets
-        $sidebar1 = array(
-            'id' => 'sidebar-1',
-            'name' => 'Main Sidebar',
-            'class' => 'main-sidebar'
-        );
+        $sidebar1 = array('id' => 'sidebar-1', 'name' => 'Main Sidebar', 'class' => 'main-sidebar');
+        $sidebar2 = array('id' => 'sidebar-2', 'name' => 'Footer Sidebar', 'class' => 'footer-sidebar');
 
-        $sidebar2 = array(
-            'id' => 'sidebar-2',
-            'name' => 'Footer Sidebar',
-            'class' => 'footer-sidebar'
-        );
+        $main_sidebar = new AN_Sidebar();
+        $footer_sidebar = new AN_Sidebar();
 
         $main_sidebar->add_aside($sidebar1);
         $footer_sidebar->add_aside($sidebar2);       // Reg a widget area with default settings
 
+        // SVG Icons class. ====> when using call
+
+        // Custom color classes.
+        new AN_Custom_Colors;
+
+        // Enhance the theme by hooking into WordPress.
+        new AN_Template_Function;
+
+        // Menu functions and filters. ====> when using call
+
+        // Custom template tags for the theme.
+        new AN_Template_Tag;
+
+        // Customizer additions.
+
+        // Block Patterns.
+        new AN_Block_Pattern;
+
+        // Block Styles.
+        new AN_Block_Styler;
+
+        // Dark Mode.
+
+
+        // Add class into body if browser is IE
+        add_action('wp_footer', array($this, 'add_ie_class'));
+    }
+
+    /**
+     * Add "is-IE" class to body if the user is on Internet Explorer.
+     *
+     * @since Twenty Twenty-One 1.0
+     *
+     * @return void
+     */
+    function add_ie_class() {
+?>
+        <script>
+            if (-1 !== navigator.userAgent.indexOf('MSIE') || -1 !== navigator.appVersion.indexOf('Trident/')) {
+                document.body.classList.add('is-IE');
+            }
+        </script>
+<?php
     }
 }
