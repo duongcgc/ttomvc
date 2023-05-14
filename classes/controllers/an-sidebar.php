@@ -13,11 +13,16 @@ class AN_Sidebar {
     private $sidebar_view;                              // view của sidebar    
 
     // Khởi tạo
-    public function __construct() {
+    public function __construct($params = []) {
 
         // Thao tác khi khởi tạo sidebar - Lấy thông tin của Model
         $this->sidebar_model    = new AN_Sidebar_Model();
         $this->sidebar_view     = new AN_Sidebar_View();
+
+        // Nếu tham số không rỗng thì lấy tham số truyền vào add_side
+        if (!empty($params)) {
+            $this->add_aside($params);
+        }
     }
 
     // Tạo mới một sidebar

@@ -14,7 +14,7 @@ class AN_Start {
     public function __construct() {
 
         // Chạy các hàm setup
-        $this->theme_setup = new AN_Setup();
+        new AN_Setup();
 
         // Chạy chức năng menu
         $this->theme_menu = new AN_Menu_Admin();
@@ -39,13 +39,11 @@ class AN_Start {
         $sidebar1 = array('id' => 'sidebar-1', 'name' => 'Main Sidebar', 'class' => 'main-sidebar');
         $sidebar2 = array('id' => 'sidebar-2', 'name' => 'Footer Sidebar', 'class' => 'footer-sidebar');
 
-        $main_sidebar = new AN_Sidebar();
-        $footer_sidebar = new AN_Sidebar();
+        new AN_Sidebar($sidebar1);
+        new AN_Sidebar($sidebar2);
 
-        $main_sidebar->add_aside($sidebar1);
-        $footer_sidebar->add_aside($sidebar2);       // Reg a widget area with default settings
-
-        // SVG Icons class. ====> when using call
+        // SVG Icon class. ====> when using call
+        new AN_SVG_Icons;
 
         // Custom color classes.
         new AN_Custom_Colors;
@@ -59,6 +57,7 @@ class AN_Start {
         new AN_Template_Tag;
 
         // Customizer additions.
+        new AN_Customize;
 
         // Block Patterns.
         new AN_Block_Pattern;
