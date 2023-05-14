@@ -178,7 +178,7 @@ class AN_Template_Tag {
             }
 
             // Posted on.
-            twenty_twenty_one_posted_on();
+            self::posted_on();
 
             // Edit post link.
             edit_post_link(

@@ -28,6 +28,10 @@ define('THEME_CONFIG',              THEME_CLASS . '/config');
 define('THEME_MODEL',               THEME_CLASS . '/models');
 define('THEME_VIEW',                THEME_CLASS . '/views');
 define('THEME_CONTROLLER',          THEME_CLASS . '/controllers');
+define('THEME_TPL',                 THEME_DIR . '/templates');
+define('THEME_BLOCK',               THEME_DIR . '/blocks');
+define('THEME_PART',                THEME_DIR . '/parts');
+define('THEME_PARTTERN',            THEME_DIR . '/partterns');
 
 // Autoload classes
 require_once(THEME_CLASS . '/autoloader.php');

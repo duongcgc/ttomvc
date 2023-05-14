@@ -24,7 +24,7 @@ class AN_Assets {
         add_action("wp_print_footer_scripts", array($this, 'skip_link_focus_fix'));
 
         // Non Language style
-        add_action('wp_enqueue_scripts', array($this,'non_latin_languages'));
+        add_action('wp_enqueue_scripts', array($this, 'non_latin_languages'));
 
 
         // Móc phương thức triển khai add_editor_styles của class vào action after_setup_theme
@@ -102,7 +102,7 @@ class AN_Assets {
             $this->assets_view->add_theme_css('ttomvc-style', THEME_CSS . '/ie.css');
         } else {
             // If not IE, use the standard stylesheet.            
-            $this->assets_view->add_theme_css('ttomvc-style', THEME_CSS . '/style.css');
+            $this->assets_view->add_theme_css('ttomvc-style', THEME_URL . '/style.css');
         }
 
         // RTL styles.
