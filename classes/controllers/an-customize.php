@@ -13,9 +13,9 @@
 class AN_Customize {
 
     // Thuộc tính
-    protected $customize_model;       // data của controller
-    protected $customize_view;        // view của controller
-
+    private $customize_model;           // data của controller  => settings
+    private $customize_view;            // view của controller  => render
+    private $customize_color_control;
 
     /**
      * Constructor. Instantiate the object.
@@ -78,15 +78,106 @@ class AN_Customize {
             $this->customize_view->render_live('.site-description', 'partial_blogdescription')
         );
 
-        // SECTIONS =======>
+        // SECTIONS - SETTINGS - CONTROL ========>
 
+        /** Default section title_tagline
+         * ==================================================================
+         */
+        $section_name = 'title_tagline';
 
+        // Add "display_title_and_tagline" setting for displaying the site-title & tagline.
+        // & Add control for the "display_title_and_tagline" setting.
+        $this->customize_model->new_option(
+            $wp_customize,
+            array(
+                'id'                => 'display_title_and_tagline',
+                'capability'        => 'edit_theme_options',
+                'type'              => 'checkbox',
+                'default'           => true,
+                'section'           => $section_name,
+                'label'             => esc_html__('Display Site Title & Tagline', 'twentytwentyone'),
+                'sanitize_callback' => array(__CLASS__, 'sanitize_checkbox')
+            )
+        );
 
+        /**
+         * Add excerpt or full text selector to customizer
+         * ==================================================================
+         */
+        $section_name = 'excerpt_settings';
+        $this->customize_model->new_section(
+            $wp_customize,
+            array(
+                'id'                => $section_name,
+                'title'             => esc_html__('Excerpt Settings', 'twentytwentyone'),
+                'priority'          => 120,
+            )
+        );
 
-        // SETTINGS ========>
+        $this->customize_model->new_option(
+            $wp_customize,
+            array(
+                'id'                => 'display_excerpt_or_full_post',
+                'capability'        => 'edit_theme_options',
+                'type'              => 'checkbox',
+                'default'           => 'excerpt',
+                'section'           => $section_name,
+                'label'             => esc_html__('On Archive Pages, posts show:', 'twentytwentyone'),
+                'choices'           => array(
+                    'excerpt' => esc_html__('Summary', 'twentytwentyone'),
+                    'full'    => esc_html__('Full text', 'twentytwentyone'),
+                ),
+                'sanitize_callback' => static function ($value) {
+                    return 'excerpt' === $value || 'full' === $value ? $value : 'excerpt';
+                },
+            )
+        );
 
+        /** Add the control. Overrides the default background-color control. 
+         * ==================================================================
+         */
+        $section_name = 'colors';
 
+        // Build the colors array from theme-support.
+        $colors = array();
+        if (isset($palette[0]) && is_array($palette[0])) {
+            foreach ($palette[0] as $palette_color) {
+                $colors[] = $palette_color['color'];
+            }
+        }
 
-        // CONTROL ========>
+        // Get the palette from theme-supports.
+        $palette = get_theme_support('editor-color-palette');
+
+        // Register the custom control.
+        $wp_customize->register_control_type('AN_Customize_Color_Control');
+
+        // Background color.
+        // Include the custom control class.
+        // Add the control. Overrides the default background-color control.
+        $this->customize_model->override_option(
+            $wp_customize,
+            new AN_Customize_Color_Control(
+                $wp_customize,
+                'background_color',
+                array(
+                    'label'   => esc_html_x('Background color', 'Customizer control', 'twentytwentyone'),
+                    'section' => $section_name,
+                    'palette' => $colors,
+                )
+            )
+        );
+    }
+
+    /**
+     * Sanitize boolean for checkbox.
+     *
+     * @since Twenty Twenty-One 1.0
+     *
+     * @param bool $checked Whether or not a box is checked.
+     * @return bool
+     */
+    public static function sanitize_checkbox($checked = null) {
+        return (bool) isset($checked) && true === $checked;
     }
 }

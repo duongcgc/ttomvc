@@ -9,6 +9,7 @@ class AN_Customize_View {
     // Thuộc tính
     protected $model;       // data của customizer
     protected $view;        // view của customizer
+    private $customize_scripts = array();
 
 
     // Khởi tạo
@@ -61,17 +62,16 @@ class AN_Customize_View {
             $param_version = $js_version;
         }
 
-        // Móc vào hook controls customize
-        add_action(
-            'customize_controls_enqueue_scripts',
-            array($this, 'an_customize_controls_enqueue_scripts'),
-            $js_name,
-            $js_file,
-            $js_depend,
-            $param_version,
-            $at_footer
+        $this->customize_scripts[$js_name] = array(
+            'js-name'       => $js_name,
+            'js-file'       => $js_file,
+            'js-depend'     => $js_depend,
+            'js-version'    => $param_version,
+            'at-footer'     => $at_footer
         );
 
+        // Móc vào hook controls customize
+        add_action('customize_controls_enqueue_scripts', array($this, 'an_customize_controls_enqueue_scripts'), 10, 5);
         return $this;
     }
 
@@ -82,7 +82,7 @@ class AN_Customize_View {
      *
      * @return void
      */
-    function an_customize_controls_enqueue_scripts($js_name, $js_file, $js_depend, $js_version, $at_footer) {
+    function an_customize_controls_enqueue_scripts() {
 
         // đăng ký query
         wp_enqueue_script($js_name, $js_file, $js_depend, $js_version, $at_footer);
@@ -105,16 +105,16 @@ class AN_Customize_View {
             $param_version = $js_version;
         }
 
-        // Móc vào hook controls customize
-        add_action(
-            'customize_preview_init',
-            array($this, 'an_customize_preview_enqueue_scripts'),
-            $js_name,
-            $js_file,
-            $js_depend,
-            $param_version,
-            $at_footer
+        $this->customize_scripts[$js_name] = array(
+            'js-name'       => $js_name,
+            'js-file'       => $js_file,
+            'js-depend'     => $js_depend,
+            'js-version'    => $param_version,
+            'at-footer'     => $at_footer
         );
+
+        // Móc vào hook controls customize
+        add_action('customize_preview_init', array($this, 'an_customize_preview_enqueue_scripts'), 10, 5);
 
         return $this;
     }
