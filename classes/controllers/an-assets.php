@@ -15,7 +15,7 @@ class AN_Assets {
 
         // Phần render assets liên quan đến view
         $this->assets_view = new AN_Assets_View;
-        $this->assets_support = new AN_Support;        
+        $this->assets_support = new AN_Support;
 
         // Add support for editor styles.
         $this->assets_support->add_support('editor-styles');
@@ -24,7 +24,7 @@ class AN_Assets {
         add_action("wp_print_footer_scripts", array($this, 'skip_link_focus_fix'));
 
         // Non Language style
-        add_action('wp_enqueue_scripts', 'non_latin_languages');
+        add_action('wp_enqueue_scripts', array($this,'non_latin_languages'));
 
 
         // Móc phương thức triển khai add_editor_styles của class vào action after_setup_theme
@@ -45,7 +45,7 @@ class AN_Assets {
      *
      * @return void
      */
-    function non_latin_languages() {
+    public function non_latin_languages() {
         $custom_css = AN_Template_Function::get_non_latin_css('front-end');
 
         if ($custom_css) {

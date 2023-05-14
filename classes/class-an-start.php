@@ -52,12 +52,13 @@ class AN_Start {
         new AN_Template_Function;
 
         // Menu functions and filters. ====> when using call
+        new AN_Menu_Function;
 
         // Custom template tags for the theme.
         new AN_Template_Tag;
 
         // Customizer additions.
-        new AN_Customize;
+        // new AN_Customize;
 
         // Block Patterns.
         new AN_Block_Pattern;
